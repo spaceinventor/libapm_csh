@@ -34,8 +34,13 @@ __attribute__((constructor)) void libinit(void) {
     can still load parameter APMs (such as PSU drivers). */
 __attribute__((weak)) extern int slash_list_add(struct slash_command * cmd);
 
-__attribute__((visibility("default"), used))
-void libmain(int argc, char ** argv) {
+/* libmain() is init function called by a loading application (CSH)
+    when linking with an APM. */
+/* 'used' is an attempt to prevent the linker from discarding libmain(),
+    when it fails to forsee it being called from the loading application (CSH).
+    This does not appear sufficient however,
+    so .as_link_whole() in meson.build must also be used. */
+__attribute__((used)) void libmain(int argc, char ** argv) {
 // void libmain(void) {
 
     if (slash_list_add != NULL) {  // If the loading application uses slash.
