@@ -10,6 +10,8 @@
 #include <slash/optparse.h>
 #include <slash/dflopt.h>
 
+#include <apm/apm.h>
+
 /* __attribute__((visibility("hidden"))) prevents the section symbols from linking with 
 	the loading application (csh) when compiling an addin.
 	In simple terms: When used alone, this means the addin must define at least 1 command,
@@ -36,8 +38,9 @@ __attribute__((weak)) extern int slash_list_add(struct slash_command * cmd);
 
 /* Library init signature versions:
     1 = void libmain()
+    2 = int libmain()
 */
-__attribute__((used)) const int apm_init_version = 1;  // NOTE: Must be updated when APM init signature(s) change.
+__attribute__((used)) const int apm_init_version = 2;  // NOTE: Must be updated when APM init signature(s) change.
 
 /* libmain() is the init function called by a loading application (CSH)
     when linking with an APM. */
@@ -46,15 +49,18 @@ __attribute__((used)) const int apm_init_version = 1;  // NOTE: Must be updated 
     This does not appear sufficient however,
     so .as_link_whole() in meson.build must also be used. */
 __attribute__((used))
-void libmain(void) {
+int libmain(void) {
 
     const int verbose = 1;
+    int ret = 0;
 
     if (slash_list_add != NULL) {  // If the loading application uses slash.
         for (struct slash_command * cmd = &__start_slash; cmd < &__stop_slash; cmd += 1) {
-            int ret = slash_list_add(cmd);
-            if (ret != 0 && verbose) {
-                fprintf(stderr, "Failed to add slash command \"%s\" while loading APM (return status: %d)\n", cmd->name, ret);
+            int res = slash_list_add(cmd);
+            if (res != 0) {
+                ret = res;
+                if (verbose)
+                    fprintf(stderr, "Failed to add slash command \"%s\" while loading APM (return status: %d)\n", cmd->name, ret);
             }
         }
     }
@@ -62,10 +68,20 @@ void libmain(void) {
     /* Check if we have parameter section defined */
     if (&__start_param != &__stop_param) {
         for (param_t * param = &__start_param; param < &__stop_param; param += 1) {
-            int ret = param_list_add(param);
-            if (ret != 0 && verbose) {
-                fprintf(stderr, "Failed to add parameter \"%s\" while loading APM (return status: %d)\n", param->name, ret);
+            int res = param_list_add(param);
+            if (res != 0) {
+                ret = res;
+                if (verbose)
+                    fprintf(stderr, "Failed to add parameter \"%s\" while loading APM (return status: %d)\n", param->name, ret);
             }
         }
     }
+
+    if (ret)
+        return ret;
+
+    if (apm_init != NULL)
+        ret = apm_init();
+
+    return ret;
 }
