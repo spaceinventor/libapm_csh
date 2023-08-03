@@ -34,27 +34,38 @@ __attribute__((constructor)) void libinit(void) {
     can still load parameter APMs (such as PSU drivers). */
 __attribute__((weak)) extern int slash_list_add(struct slash_command * cmd);
 
-/* libmain() is init function called by a loading application (CSH)
+/* Library init signature versions:
+    1 = void libmain()
+*/
+__attribute__((used)) const int apm_init_version = 1;  // NOTE: Must be updated when APM init signature(s) change.
+
+/* libmain() is the init function called by a loading application (CSH)
     when linking with an APM. */
 /* 'used' is an attempt to prevent the linker from discarding libmain(),
     when it fails to forsee it being called from the loading application (CSH).
     This does not appear sufficient however,
     so .as_link_whole() in meson.build must also be used. */
-__attribute__((used)) void libmain(int argc, char ** argv) {
-// void libmain(void) {
+__attribute__((used))
+void libmain(void) {
+
+    const int verbose = 1;
 
     if (slash_list_add != NULL) {  // If the loading application uses slash.
         for (struct slash_command * cmd = &__start_slash; cmd < &__stop_slash; cmd += 1) {
-            slash_list_add(cmd);
+            int ret = slash_list_add(cmd);
+            if (ret != 0 && verbose) {
+                fprintf(stderr, "Failed to add slash command \"%s\" while loading APM (return status: %d)\n", cmd->name, ret);
+            }
         }
     }
 
     /* Check if we have parameter section defined */
     if (&__start_param != &__stop_param) {
         for (param_t * param = &__start_param; param < &__stop_param; param += 1) {
-            // printf("name %s %p %p %x %p\n", param->name, param, param->addr, param->mask, &param->mask);
             int ret = param_list_add(param);
-            // printf("Result %d\n", ret);
+            if (ret != 0 && verbose) {
+                fprintf(stderr, "Failed to add parameter \"%s\" while loading APM (return status: %d)\n", param->name, ret);
+            }
         }
     }
 }
