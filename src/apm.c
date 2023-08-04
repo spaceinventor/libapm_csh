@@ -6,9 +6,14 @@
 #include <param/param_list.h>
 #include <vmem/vmem.h>
 #include <vmem/vmem_ram.h>
+
+#include "apm_csh.h"
+
+#ifdef APM_HAVE_SLASH
 #include <slash/slash.h>
 #include <slash/optparse.h>
 #include <slash/dflopt.h>
+#endif
 
 #include <apm/apm.h>
 
@@ -25,7 +30,7 @@ extern param_t __stop_param __attribute__((visibility("hidden"), weak));
 
 #if 0
 /* __attribute__((constructor)) will run automatically when linking with the loading application, 
-    but not arguments can be passed. */
+    but no arguments can be passed. */
 __attribute__((constructor)) void libinit(void) {
 
 }
@@ -54,6 +59,7 @@ int libmain(void) {
     const int verbose = 1;
     int ret = 0;
 
+#ifdef APM_HAVE_SLASH
     if (slash_list_add != NULL) {  // If the loading application uses slash.
         for (struct slash_command * cmd = &__start_slash; cmd < &__stop_slash; cmd += 1) {
             int res = slash_list_add(cmd);
@@ -64,6 +70,7 @@ int libmain(void) {
             }
         }
     }
+#endif
 
     /* Check if we have parameter section defined */
     if (&__start_param != &__stop_param) {
