@@ -36,7 +36,7 @@ __attribute__((weak)) extern int slash_list_add(struct slash_command * cmd);
     1 = void libmain()
     2 = int libmain()
 */
-__attribute__((used)) const int apm_init_version = 2;  // NOTE: Must be updated when APM init signature(s) change.
+__attribute__((used)) const int apm_init_version = 3;  // NOTE: Must be updated when APM init signature(s) change.
 
 /* libmain() is the init function called by a loading application (CSH)
     when linking with an APM. */
