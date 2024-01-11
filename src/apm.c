@@ -80,6 +80,12 @@ int libmain(void) {
     /* Check if we have parameter section defined */
     if (&__start_param != &__stop_param) {
         for (param_t * param = &__start_param; param < &__stop_param; param += 1) {
+            param_t * existing_param;
+            if ((existing_param = param_list_find_id(param->node, param->id)) != NULL) {
+                fprintf(stderr, "Parameter %s with id %d already exists as parameter %s\n", param->name, param->id, existing_param->name);
+                return -1;
+            }
+
             int res = param_list_add(param);
             if (res != 0) {
                 ret = res;
