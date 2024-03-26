@@ -63,10 +63,12 @@ int libmain(void) {
     if (slash_list_add != NULL) {  // If the loading application uses slash.
         for (struct slash_command * cmd = &__start_slash; cmd < &__stop_slash; cmd += 1) {
             int res = slash_list_add(cmd);
-            if (res != 0) {
+            if (res < 0) {
                 ret = res;
                 if (verbose)
                     fprintf(stderr, "Failed to add slash command \"%s\" while loading APM (return status: %d)\n", cmd->name, ret);
+            } else if (res > 0) {
+                printf("Slash command '%s' is overriding an existing command\n", cmd->name);
             }
         }
     }
