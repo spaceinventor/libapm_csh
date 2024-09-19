@@ -1,2 +1,2 @@
 #!/bin/sh
-meson_apm_options="-D=buildtype=debug -Dc_std=gnu11 -Db_lto=false -Db_lundef=false -Dparam:list_dynamic=true -Dcsp:packet_padding_bytes=42 -Dcsp:buffer_count=1000 -Dcsp:buffer_size=2048 -Dcsp:conn_max=20 -Dcsp:conn_rxqueue_len=1000 -Dcsp:qfifo_len=1000 -Dcsp:rdp_max_window=1000 -Dcsp:port_max_bind=16 -Ddefault_library=shared"
+meson_apm_options="-D=buildtype=debug -Dc_std=gnu11 -Dprefix=$HOME/.local -Dlibdir=lib/csh -Db_lto=false -Db_lundef=false -Dparam:list_dynamic=true -Dcsp:packet_padding_bytes=42 -Dcsp:buffer_count=1000 -Dcsp:buffer_size=2048 -Dcsp:conn_max=20 -Dcsp:conn_rxqueue_len=1000 -Dcsp:qfifo_len=1000 -Dcsp:rdp_max_window=1000 -Dcsp:port_max_bind=16 -Ddefault_library=shared"
