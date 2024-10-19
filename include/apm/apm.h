@@ -10,4 +10,4 @@
  * @return truthy value indicates an error to the loading application,
  *  which should then unlink or close.
  */
-__attribute__((weak)) int apm_init(void);
+__attribute__((weak, visibility("hidden"))) int apm_init(void);
