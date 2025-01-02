@@ -10,6 +10,10 @@
 #include <param/param_list.h>
 #include <vmem/vmem.h>
 #include <vmem/vmem_ram.h>
+static param_t param_size_set0;
+static param_t param_size_set1;
+#define PARAM_STORAGE_SIZE ((intptr_t) &param_size_set1 - (intptr_t) &param_size_set0)
+
 #endif
 
 #ifdef APM_HAVE_SLASH
@@ -81,9 +85,11 @@ int libmain(void) {
 
     /* Check if we have parameter section defined */
     if (&__start_param != &__stop_param) {
-        for (param_t * param = &__start_param; param < &__stop_param; param += 1) {
+
+        for (intptr_t param_runner = (intptr_t)&__start_param; param_runner < (intptr_t)&__stop_param; param_runner += PARAM_STORAGE_SIZE) {
+            param_t * param = (param_t *)param_runner;
             param_t * existing_param;
-            if ((existing_param = param_list_find_id(param->node, param->id)) != NULL) {
+            if ((existing_param = param_list_find_id(*(param->node), param->id)) != NULL) {
                 fprintf(stderr, "Parameter %s with id %d already exists as parameter %s\n", param->name, param->id, existing_param->name);
                 return -1;
             }
