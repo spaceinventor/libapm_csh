@@ -10,7 +10,9 @@
 #include <param/param_list.h>
 #include <vmem/vmem.h>
 #include <vmem/vmem_ram.h>
+__attribute__((no_reorder))
 static param_t param_size_set0;
+__attribute__((no_reorder))
 static param_t param_size_set1;
 #define PARAM_STORAGE_SIZE ((intptr_t) &param_size_set1 - (intptr_t) &param_size_set0)
 
