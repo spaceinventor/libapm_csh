@@ -21,7 +21,7 @@ static param_t param_size_set1;
 #ifdef APM_HAVE_SLASH
 #include <slash/slash.h>
 #include <slash/optparse.h>
-#include <slash/dflopt.h>
+#include <apm/csh_api.h>
 #endif
 
 #include <apm/apm.h>
