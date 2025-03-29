@@ -3,10 +3,33 @@
 extern "C" {
 #endif
 
+
+/*
+
+CSH API version 
+
+************
+* IMPORTANT: Must be updated when ABI breaks or the API is extended!
+************
+
+ABI in this context covers:
+    - types defined in this file
+    - libparam ABI
+    - slash ABI
+    - csp ABI
+in summary: all the libraries used by *both* CSH and the APMs
+
+"API is extended" means: non breaking ABI changes aka new functions, new types etc
+*/
+#define APM_INIT_VERSION 9
+
 struct slash;
 
+/* Represent the current desired default CSP node CSH operates on */
 extern unsigned int slash_dfl_node;
+/* Represent the current desired default timeout for CSP communication */
 extern unsigned int slash_dfl_timeout;
+
 extern unsigned int rdp_dfl_window;
 extern unsigned int rdp_dfl_conn_timeout;
 extern unsigned int rdp_dfl_packet_timeout;
