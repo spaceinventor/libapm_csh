@@ -4,6 +4,8 @@
 #include <string.h>
 
 #include "apm_csh.h"
+#include <apm/csh_api.h>
+#include <apm/apm.h>
 
 #ifdef APM_HAVE_PARAM
 #include <param/param.h>
@@ -21,10 +23,7 @@ static param_t param_size_set1;
 #ifdef APM_HAVE_SLASH
 #include <slash/slash.h>
 #include <slash/optparse.h>
-#include <slash/dflopt.h>
 #endif
-
-#include <apm/apm.h>
 
 #if 0
 /* __attribute__((constructor)) will run automatically when linking with the loading application, 
@@ -42,7 +41,7 @@ __attribute__((weak)) extern int slash_list_add(struct slash_command * cmd);
     1 = void libmain()
     2 = int libmain()
 */
-__attribute__((used)) const int apm_init_version = 8;  // NOTE: Must be updated when APM init signature(s) change.
+__attribute__((used)) const int apm_init_version = APM_INIT_VERSION;
 
 /* libmain() is the init function called by a loading application (CSH)
     when linking with an APM. */
