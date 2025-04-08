@@ -106,7 +106,7 @@ void host_name_completer(struct slash *slash, char * token);
 /**
  * @brief Add an option to given parser that can handle node parameter as numerical address or hostname
  * @param parser to which the option parser should apply to
- * @param node pointer to a valid variable that will receive the resulting node address as an unsigned int
+ * @param node pointer to a valid variable that will receive the resulting node address as an unsigned int (defaults to `slash_dfl_node`)
  * @return reference to newly created option
  */
 optparse_opt_t *csh_add_node_option(optparse_t * parser, unsigned int *node);
