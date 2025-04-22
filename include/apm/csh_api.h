@@ -81,15 +81,15 @@ int known_hosts_get_name(int find_host, char * name, int buflen);
 /**
  * @brief returns the CSP address for the given name if found
  * @param find_name name to find
- * @return CSP address if name was found, 0 otherwise
+ * @return CSP address if name was found, -1 otherwise
  */
 int known_hosts_get_node(const char * find_name);
 
 /**
- * @brief Get a node's CSP address from a string containing either a name to lookup in the "kown hosts list" or a decimal number
+ * @brief Get a node's CSP address from a string containing either a name to lookup in the "known hosts" list or a decimal number
  * @param res_ptr pointer to a valid integer that will contain the looked up CSP address
  * @param arg string containing either a decimal number or a name to lookup
- * @return 1 if arg contained a valid number or name. In this case, *res_ptr is a valid CSP address. 0 in case of failure (*res_ptr is untouched then)
+ * @return 1 if arg contained a valid name, 2 if valid number. In this case, *res_ptr is a valid CSP address. 0 in case of failure (*res_ptr is untouched then)
  */
 int get_host_by_addr_or_name(void *res_ptr, const char *arg);
 
