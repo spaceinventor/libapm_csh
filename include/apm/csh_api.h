@@ -104,6 +104,13 @@ int get_host_by_addr_or_name(void *res_ptr, const char *arg);
 void host_name_completer(struct slash *slash, char * token);
 
 /**
+ * @brief a slash tab-completion function that completes parameter names, based on the parameter list.
+ * 
+ * Arguments identical to `host_name_completer()`
+ */
+void param_completer(struct slash *slash, char * token);
+
+/**
  * @brief Add an option to given parser that can handle node parameter as numerical address or hostname
  * @param parser to which the option parser should apply to
  * @param node pointer to a valid variable that will receive the resulting node address as an unsigned int (defaults to `slash_dfl_node`)
