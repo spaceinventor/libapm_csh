@@ -26,7 +26,7 @@ in summary: all the libraries used by *both* CSH and the APMs
 
 "API is extended" means: non breaking ABI changes aka new functions, new types etc
 */
-#define APM_INIT_VERSION 9
+#define APM_INIT_VERSION 10
 
 struct slash;
 
