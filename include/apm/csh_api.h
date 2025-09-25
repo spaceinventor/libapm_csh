@@ -118,6 +118,37 @@ void param_completer(struct slash *slash, char * token);
  */
 optparse_opt_t *csh_add_node_option(optparse_t * parser, unsigned int *node);
 
+
+/* Python execution related APIs */
+
+/**
+ * @brief Execute the given string as Python code within the CSH context
+ * @param string Python code to execute
+ * @param argc number of arguments (passed through `sys.argv`), 0 if no args
+ * @param argv same semantics as C main() function
+ * @return 0 in case of success, < 0 in case of failure
+ */
+extern int csh_python_exec_string(const char *string, int argc, char **argv);
+/**
+ * @brief Execute the Python code contained in the given filename within the CSH context
+ * @param filname name of the file containing Python code to execute
+ * @param argc number of arguments (passed through `sys.argv`), 0 if no args
+ * @param argv same semantics as C main() function
+  * @return 0 in case of success, < 0 in case of failure
+*/
+extern int csh_python_exec_file(const char *filename, int argc, char **argv);
+
+
+/** Prototype for a CSH customization prompt function */
+typedef int (*csh_custom_apm_prompt_t)(struct slash * slash);
+
+/**
+ * @brief APM can customize CSH's prompt by calling this function 
+ * @param apm_prompt custom prompt function or NULL to restore CSH default prompt
+ * 
+ */
+extern void csh_set_prompt_for_apm(csh_custom_apm_prompt_t apm_prompt);
+
 #ifdef __cplusplus
 }
 #endif

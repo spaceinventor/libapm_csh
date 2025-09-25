@@ -1,4 +1,4 @@
-project('apm_csh', 'c')
+project('apm_csh', 'c', version: '10')
 
 apm_csh_inc = include_directories('.', 'include')
 
