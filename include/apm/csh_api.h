@@ -118,6 +118,17 @@ void param_completer(struct slash *slash, char * token);
  */
 optparse_opt_t *csh_add_node_option(optparse_t * parser, unsigned int *node);
 
+/**
+ * @brief Read a 64 bit VMEM address from the command line arguments
+ * @return status code: SLASH_SUCCESS in case of success, < 0 in case of failure
+ */
+int parse_vmem_address(struct slash *slash, int *argi, uint64_t *address);
+
+/**
+ * @brief Read a 32 bit integer in base 10 or base 16 from the command line arguments
+ * @return status code: SLASH_SUCCESS in case of success, < 0 in case of failure
+ */
+int parse_length(struct slash *slash, int *argi, uint32_t *length);
 
 /* Python execution related APIs */
 
