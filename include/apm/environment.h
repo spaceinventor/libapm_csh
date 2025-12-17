@@ -47,7 +47,7 @@ extern "C"
     /**
      * @brief Remove all the variables from the environment
      */
-    void csh_clearenv();
+    void csh_clearenv(void);
 
     /**
      * @brief Expands references to variables noted as $(VARNAME) in the input string

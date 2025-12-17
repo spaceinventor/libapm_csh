@@ -58,7 +58,7 @@ void known_host_set_storage_size(uint32_t new_size);
  * @brief Return the current size known_hosts_add will malloc() when creating a new node
  * @return current allocation size in bytes
  */
-uint32_t known_host_get_storage_size();
+uint32_t known_host_get_storage_size(void);
 
 /**
  * @brief Adds a new host information (CSP address and name) to the list of known hosts
