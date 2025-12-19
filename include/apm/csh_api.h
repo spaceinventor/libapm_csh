@@ -2,6 +2,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include <time.h>
 #include <slash/optparse.h>
 #include <apm/environment.h>
 
@@ -159,6 +160,12 @@ typedef int (*csh_custom_apm_prompt_t)(struct slash * slash);
  * 
  */
 extern void csh_set_prompt_for_apm(csh_custom_apm_prompt_t apm_prompt);
+
+
+/**************** HOUSE KEEPING UTILITY FUNCTIONS ****/
+
+bool hk_get_epoch(time_t* epoch, uint16_t node);
+void hk_set_epoch(time_t epoch, uint16_t node, bool auto_sync);
 
 #ifdef __cplusplus
 }
