@@ -89,7 +89,7 @@ int libmain(void) {
 
         for (intptr_t param_runner = (intptr_t)&__start_param; param_runner < (intptr_t)&__stop_param; param_runner += PARAM_STORAGE_SIZE) {
             param_t * param = (param_t *)param_runner;
-            param_t * existing_param;
+            const param_t * existing_param;
             if ((existing_param = param_list_find_id(*(param->node), param->id)) != NULL) {
                 fprintf(stderr, "Parameter %s with id %d already exists as parameter %s\n", param->name, param->id, existing_param->name);
                 return -1;
@@ -104,6 +104,9 @@ int libmain(void) {
         }
     }
 #endif
+
+    extern vmem_t __start_vmem __attribute__((weak));
+    extern vmem_t __stop_vmem __attribute__((weak));
 
     if(&__start_vmem != &__stop_vmem) {
         vmem_add(&__start_vmem, &__stop_vmem);
