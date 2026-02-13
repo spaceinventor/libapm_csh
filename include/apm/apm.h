@@ -11,3 +11,5 @@
  *  which should then unlink or close.
  */
 __attribute__((weak, visibility("hidden"))) int apm_init(void);
+
+int libmain(void);

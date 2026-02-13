@@ -1,4 +1,5 @@
 project('apm_csh', 'c', version: '10', default_options: ['warning_level=3', 'werror=true'])
+add_project_arguments(['-Wstrict-prototypes', '-Wmissing-prototypes', '-Wmissing-declarations', '-Wcast-align', '-Wpointer-arith', '-Wshadow'], language: 'c')
 
 apm_csh_inc = include_directories('.', 'include')
 
