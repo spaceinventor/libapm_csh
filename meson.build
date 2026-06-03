@@ -4,6 +4,7 @@ apm_csh_inc = include_directories('.', 'include')
 
 dependencies = []
 dependencies += dependency('csp', fallback: ['csp', 'csp_dep'], required: false).partial_dependency(links: false, includes: true)
+dependencies += dependency('ossi', fallback: ['ossi', 'ossi_dep'], required: false).partial_dependency(links: false, includes: true)
 param_dep = dependency('param', fallback: ['param', 'param_dep'], required: false).partial_dependency(links: false, includes: true)
 slash_dep = dependency('slash', fallback: ['slash', 'slash_dep'], required: false).partial_dependency(links: false, includes: true)
 dependencies += param_dep
