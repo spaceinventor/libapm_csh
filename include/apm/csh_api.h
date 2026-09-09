@@ -2,7 +2,6 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include <time.h>
 #include <slash/optparse.h>
 #include <apm/environment.h>
 
@@ -27,7 +26,7 @@ in summary: all the libraries used by *both* CSH and the APMs
 
 "API is extended" means: non breaking ABI changes aka new functions, new types etc
 */
-#define APM_INIT_VERSION 10
+#define APM_INIT_VERSION 11
 
 struct slash;
 
@@ -161,11 +160,6 @@ typedef int (*csh_custom_apm_prompt_t)(struct slash * slash);
  */
 extern void csh_set_prompt_for_apm(csh_custom_apm_prompt_t apm_prompt);
 
-
-/**************** HOUSE KEEPING UTILITY FUNCTIONS ****/
-
-bool hk_get_epoch(time_t* epoch, uint16_t node);
-void hk_set_epoch(time_t epoch, uint16_t node, bool auto_sync);
 
 #ifdef __cplusplus
 }
