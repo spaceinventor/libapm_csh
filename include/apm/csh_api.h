@@ -28,6 +28,8 @@ in summary: all the libraries used by *both* CSH and the APMs
 */
 #define APM_INIT_VERSION 11
 
+#define SI_NODENAME_MAX_LEN 50
+
 struct slash;
 
 /* Represent the current desired default CSP node CSH operates on */
