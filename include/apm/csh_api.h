@@ -1,5 +1,5 @@
 #pragma once
-
+#include <time.h>
 #include <stdint.h>
 #include <stdbool.h>
 #include <slash/optparse.h>
@@ -132,6 +132,13 @@ int parse_vmem_address(struct slash *slash, int *argi, uint64_t *address);
  */
 int parse_length(struct slash *slash, int *argi, uint32_t *length);
 
+/**
+ * @brief Extract a list of nodes separated by comma
+ * @param nodes_str String containing list of nodes
+ * @return number of nodes extracted
+ */
+int extract_nodes(const char *nodes_str, int **nodes);
+
 /* Python execution related APIs */
 
 /**
@@ -162,6 +169,11 @@ typedef int (*csh_custom_apm_prompt_t)(struct slash * slash);
  */
 extern void csh_set_prompt_for_apm(csh_custom_apm_prompt_t apm_prompt);
 
+
+/**************** HOUSE KEEPING UTILITY FUNCTIONS ****/
+
+bool hk_get_epoch(time_t* epoch, uint16_t node);
+void hk_set_epoch(time_t epoch, uint16_t node, bool auto_sync);
 
 #ifdef __cplusplus
 }
